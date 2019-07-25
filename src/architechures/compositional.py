@@ -5,7 +5,7 @@ import torch
 class Compositional(nn.Module):
     """
     Architechure for modelling symmetric relations using
-    compositional embeddings
+    compositional (dot product) embeddings
 
     """
 

@@ -38,3 +38,11 @@ loader = DataLoader(subset1, batch_size=2)
 for batch_ndx, sample in enumerate(loader):
     print(sample[0].size())
     # print(sample[1])
+
+x = torch.randn((1, 10))
+y = torch.randn((1, 10))
+z = torch.randn((1, 10))
+t = x * y * z
+print(t)
+print(t.size())
+print(x[0][0], y[0][0], z[0][0])
