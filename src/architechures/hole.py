@@ -33,7 +33,8 @@ class HOLE(nn.Module):
         result = torch.mean(a * b, dim=1).view(-1, 1)
         for i in range(1, self.num_dim):
             result = torch.cat(
-                [result, torch.mean(a * self.shift_left(b, i)).view(-1, 1)], dim=1
+                [result, torch.mean(a * self.shift_left(b, i), dim=1).view(-1, 1)],
+                dim=1,
             )
         return result
 

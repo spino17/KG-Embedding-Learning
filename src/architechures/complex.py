@@ -16,42 +16,45 @@ class ComplEx(nn.Module):
         self.num_dim = num_dim
         self.num_entities = num_entities
         self.num_relations = num_relations
-        self.embedding_entity_r = nn.ModuleList(
-            [nn.Linear(1, num_dim) for i in range(num_entities)]
+        self.entity_embedding_r = nn.Linear(
+            num_entities, num_dim, bias=False
         )  # entity embedding real part
-        self.embedding_entity_i = nn.ModuleList(
-            [nn.Linear(1, num_dim) for i in range(num_entities)]
+        self.entity_embedding_i = nn.Linear(
+            num_entities, num_dim, bias=False
         )  # entity embedding imaginary part
-        self.embedding_relation_r = nn.ModuleList(
-            [nn.Linear(1, num_dim) for i in range(num_entities)]
+        self.relation_embedding_r = nn.Linear(
+            num_relations, num_dim, bias=False
         )  # relation embedding real part
-        self.embedding_relation_i = nn.ModuleList(
-            [nn.Linear(1, num_dim) for i in range(num_entities)]
+        self.relation_embedding_i = nn.Linear(
+            num_relations, num_dim, bias=False
         )  # relation embedding imaginary part
-        self.input_vec = torch.ones(1, 1)
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x, y, r):
         term_1 = torch.mean(
-            self.embedding_relation_r[r](self.input_vec)
-            * self.embedding_entity_r[x](self.input_vec)
-            * self.embedding_entity_r[y](self.input_vec)
-        )
+            self.relation_embedding_r(r)
+            * self.entity_embedding_r(x)
+            * self.entity_embedding_r(y),
+            dim=1,
+        ).view(-1, 1)
         term_2 = torch.mean(
-            self.embedding_relation_r[r](self.input_vec)
-            * self.embedding_entity_i[x](self.input_vec)
-            * self.embedding_entity_i[y](self.input_vec)
-        )
+            self.relation_embedding_r(r)
+            * self.entity_embedding_i(x)
+            * self.entity_embedding_i(y),
+            dim=1,
+        ).view(-1, 1)
         term_3 = torch.mean(
-            self.embedding_relation_i[r](self.input_vec)
-            * self.embedding_entity_r[x](self.input_vec)
-            * self.embedding_entity_i[y](self.input_vec)
-        )
+            self.relation_embedding_i(r)
+            * self.entity_embedding_r(x)
+            * self.entity_embedding_i(y),
+            dim=1,
+        ).view(-1, 1)
         term_4 = torch.mean(
-            self.embedding_relation_i[r](self.input_vec)
-            * self.embedding_entity_i[x](self.input_vec)
-            * self.embedding_entity_r[y](self.input_vec)
-        )
+            self.relation_embedding_i(r)
+            * self.entity_embedding_i(x)
+            * self.entity_embedding_r(y),
+            dim=1,
+        ).view(-1, 1)
         result = (
             term_1 + term_2 + term_3 - term_4
         )  # resultant tensor product of triplet embeddings (x, y, r)
