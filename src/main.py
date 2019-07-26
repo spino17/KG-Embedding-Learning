@@ -1,4 +1,4 @@
-from architechures import Compositional, HOLE
+from architechures import Compositional, HOLE, ComplEx
 from models import Network
 import torch
 from torch import nn
@@ -16,6 +16,8 @@ num_epochs = 10  # number of loops over training dataset
 
 # defining the model
 model = Network(Compositional(num_dim, num_entities, num_relations))
+for params in model.parameters():
+    print(torch.mean(params))
 
 # compiling the model
 model.compile(optimizer_name="adam", loss="LogisticLoss")

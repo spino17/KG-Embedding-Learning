@@ -18,31 +18,29 @@ class HOLE(nn.Module):
         self.num_dim = num_dim
         self.num_entities = num_entities
         self.num_relations = num_relations
-        self.embedding_list_entity = nn.ModuleList(
-            [nn.Linear(1, num_dim) for i in range(num_entities)]
-        )
-        self.embedding_list_relations = nn.ModuleList(
-            [nn.Linear(1, num_dim) for i in range(num_relations)]
-        )
+        self.entity_embedding = nn.Linear(num_entities, num_dim, bias=False)
+        self.relation_embedding = nn.Linear(num_relations, num_dim, bias=False)
         self.sigmoid = nn.Sigmoid()
-        self.input_vec = torch.ones(1, 1)  # to convert linear to tensors
 
     def shift_left(self, a, shift_size):
-        a = a.numpy()
+        a = a.detach().numpy()
         a = np.roll(a, shift_size, axis=1)
         a = torch.from_numpy(a)
+        a = a.clone().detach().requires_grad_(True)
         return a
 
     def circular_correlation(self, a, b):
-        result = torch.zeros_like(a)
-        for i in range(self.num_dim):
-            result[0][i] = torch.mean(a * self.shift_left(b, i)).item()
+        result = torch.mean(a * b, dim=1).view(-1, 1)
+        for i in range(1, self.num_dim):
+            result = torch.cat(
+                [result, torch.mean(a * self.shift_left(b, i)).view(-1, 1)], dim=1
+            )
         return result
 
     def forward(self, x, y, r):
         result_1 = self.circular_correlation(
-            self.embedding_list_entity[x](self.input_vec),
-            self.embedding_list_entity[y](self.input_vec),
+            self.entity_embedding(x), self.entity_embedding(y)
         )
-        result_2 = torch.dot(self.embedding_list_relations[r](self.input_vec), result_1)
-        return self.sigmoid(result_2)
+        result_2 = torch.mm(self.relation_embedding(r), torch.transpose(result_1, 0, 1))
+        result = torch.diag(result_2).view(-1, 1)
+        return self.sigmoid(result)

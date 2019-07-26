@@ -2,7 +2,7 @@ from torch import nn
 import torch
 from utils import Losses as L
 from utils import Optimizers as O
-from utils import Regularizers as R
+from utils import Regularizer as R
 from preprocessing import DataGenerator
 
 
