@@ -37,13 +37,21 @@ class Network(nn.Module):
     # training method
     def fit(self, x_train, y_train, batch_size, num_epochs, validation_split=0.2):
         train_losses, test_losses = [], []
-        data_processor = DataGenerator(x_train, y_train, batch_size, validation_split)
+        X = x_train[:, 0]  # entity - 1
+        Y = x_train[:, 1]  # entity - 2
+        Z = x_train[:, 2]  # entity - 3
+        y_target = y_train  # target probabilities
+        data_processor = DataGenerator(X, Y, Z, y_target, batch_size, validation_split)
         TrainLoader = data_processor.get_trainloader()
         ValLoader = data_processor.get_validationloader()
         for epoch in range(num_epochs):
             # training loop
             running_loss = 0.0
             for batch_ndx, sample in enumerate(TrainLoader):
+                a = data_processor.one_hot_encoding(sample[0], self.model.num_entities)
+                b = data_processor.one_hot_encoding(sample[1], self.model.num_entities)
+                r = data_processor.one_hot_encoding(sample[2], self.model.num_relations)
+                y_target = sample[3]  # target probabilities
                 self.optimizer.zero_grad()
                 y_pred = self.model.forward(a, b, r)
                 loss = self.criterion(y_pred, y_target) + self.regularizer
@@ -56,6 +64,16 @@ class Network(nn.Module):
                 accuracy = 0
                 with torch.no_grad():
                     for batch_ndx, sample in enumerate(ValLoader):
+                        a = data_processor.one_hot_encoding(
+                            sample[0], self.model.num_entities
+                        )
+                        b = data_processor.one_hot_encoding(
+                            sample[1], self.model.num_entities
+                        )
+                        r = data_processor.one_hot_encoding(
+                            sample[2], self.model.num_relations
+                        )
+                        y_target = sample[3]
                         y_pred = self.model.forward(a, b, r)
                         val_loss += (
                             self.criterion(y_pred, y_target) + self.regularizer
