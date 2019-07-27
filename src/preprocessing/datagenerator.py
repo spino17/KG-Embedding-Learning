@@ -10,12 +10,13 @@ class DataGenerator(Dataset):
 
     """
 
-    def __init__(self, X, Y, Z, target, batch_size, validation_split=0.2):
+    def __init__(self, X, Y, Z, y_target, batch_size, validation_split=0.2):
         super(DataGenerator, self).__init__()
         X = torch.from_numpy(X)
         Y = torch.from_numpy(Y)
         Z = torch.from_numpy(Z)
-        self.dataset = TensorDataset(X, Y, Z, target)
+        y_target = torch.from_numpy(y_target)
+        self.dataset = TensorDataset(X, Y, Z, y_target)
         self.batch_size = batch_size
         lengths = [
             int(len(self.dataset) * (1 - validation_split)),
@@ -32,10 +33,5 @@ class DataGenerator(Dataset):
         return DataLoader(self.validation_dataset, self.batch_size)
 
     def one_hot_encoding(self, sample, num_entries):
-        a = sample[0]  # entity - 1
-        b = sample[1]  # entity - 2
-        r = sample[2]  # entity - 3
-        a = one_hot(sample[0], num_entries).view(-1, num_entries)
-        b = one_hot(sample[1], num_entries).view(-1, num_entries)
-        r = one_hot(sample[2], num_entries).view(-1, num_entries)
-        return a, b, r
+        sample = one_hot(sample, num_entries).view(-1, num_entries)
+        return sample
