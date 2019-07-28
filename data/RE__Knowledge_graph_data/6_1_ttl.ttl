@@ -1,0 +1,332 @@
+@prefix ns: <NS/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ns:Program ns:hasBBList ns:BasicBlocks ;
+    ns:hasCFPS ns:CFPS ;
+    ns:hasID "5" ;
+    ns:startNodeId "1" .
+
+<NS/-1057703587007188301> ns:hasExpression "arr[j - 1]" ;
+    ns:hasStatementSideType 3 ;
+    ns:hasStatementSideTypeStr "StatementSideType.Expression" .
+
+<NS/-1260519054848789007> ns:hasIndexVariableName "j" .
+
+<NS/-1996072727810494437> ns:hasArrayDetails <NS/4988978206601022632> ;
+    ns:hasValue "arr" .
+
+<NS/-413792320302729873> ns:hasArrayDetails <NS/-1260519054848789007> ;
+    ns:hasValue "arr" .
+
+<NS/-5827209598920314130> ns:hasExpression "arr[0]" ;
+    ns:hasStatementSideType 3 ;
+    ns:hasStatementSideTypeStr "StatementSideType.Expression" .
+
+<NS/-6806091404601886873> ns:hasExpression "n" ;
+    ns:hasStatementSideType 1 ;
+    ns:hasStatementSideTypeStr "StatementSideType.Variable" ;
+    ns:hasVarUses [ ns:hasVarUse <NS/6522732389406290960> ] .
+
+<NS/-6987884689226362546> ns:hasExpression "arr" ;
+    ns:hasStatementSideType 1 ;
+    ns:hasStatementSideTypeStr "StatementSideType.Variable" ;
+    ns:hasVarUses [ ns:hasVarUse <NS/-6735439360671838286> ] .
+
+<NS/-7966476211444856667> ns:hasExpression "[1, 2, 3, 4, 5]" ;
+    ns:hasStatementSideType 2 ;
+    ns:hasStatementSideTypeStr "StatementSideType.Constant" ;
+    ns:hasValue "[[2, 'DataType.Integer', '1'], [2, 'DataType.Integer', '2'], [2, 'DataType.Integer', '3'], [2, 'DataType.Integer', '4'], [2, 'DataType.Integer', '5']]" .
+
+<NS/3824201372902403646> ns:hasIndexVariableName "i" .
+
+<NS/4988978206601022632> ns:hasIndexConstant "0" ;
+    ns:hasIndexDataType "2" ;
+    ns:hasIndexDataTypeStr "DataType.Integer" .
+
+<NS/5458005914466743414> ns:hasExpression "arr[len(arr) - 1]" ;
+    ns:hasStatementSideType 3 ;
+    ns:hasStatementSideTypeStr "StatementSideType.Expression" .
+
+<NS/6657706377691527971> ns:hasExpression "3" ;
+    ns:hasStatementSideType 2 ;
+    ns:hasStatementSideTypeStr "StatementSideType.Constant" ;
+    ns:hasValue "3" .
+
+<NS/8292455415998778947> ns:hasValue "n" .
+
+<NS/8931069138905403341> ns:hasExpression "arr[j]" ;
+    ns:hasStatementSideType 3 ;
+    ns:hasStatementSideTypeStr "StatementSideType.Expression" .
+
+ns:BasicBlocks ns:hasBB <NS/1>,
+        <NS/10>,
+        <NS/11>,
+        <NS/2>,
+        <NS/3>,
+        <NS/4>,
+        <NS/5>,
+        <NS/6>,
+        <NS/7>,
+        <NS/8>,
+        <NS/9> .
+
+ns:CFPS ns:hasPath [ ns:Path [ ns:nextBlock <NS/1> ] ;
+            ns:hasID 1 ] .
+
+ns:stmtAtLine12 ns:hasBlockLineNo 1 ;
+    ns:hasLineNo 12 ;
+    ns:hasStmtType 3 ;
+    ns:hasStmtTypeStr "StatementType.Loop"^^xsd:integer ;
+    ns:hasVarDefs [ ns:hasVarDef <NS/4839003584871545710> ] ;
+    ns:hasVarUses [ ns:hasVarUse <NS/8292455415998778947> ] ;
+    ns:stmtString "for i in range(0, n):" .
+
+ns:stmtAtLine14 ns:hasBlockLineNo 1 ;
+    ns:hasLHSs [ ns:hasLHS <NS/7725162195558254452> ] ;
+    ns:hasLineNo 14 ;
+    ns:hasOperator 26 ;
+    ns:hasOperatorStr "Operator.Assign" ;
+    ns:hasRHS <NS/5458005914466743414> ;
+    ns:hasStmtType 1 ;
+    ns:hasStmtTypeStr "StatementType.Expression"^^xsd:integer ;
+    ns:hasVarDefs [ ns:hasVarDef <NS/6059893195497634806> ] ;
+    ns:hasVarUses [ ns:hasVarUse <NS/-2292721502658799941>,
+                <NS/-5897254778472532222> ] ;
+    ns:stmtString "last = arr[len(arr) - 1]" .
+
+ns:stmtAtLine16 ns:hasBlockLineNo 1 ;
+    ns:hasLineNo 16 ;
+    ns:hasOperator 28 ;
+    ns:hasOperatorStr "Operator.USub" ;
+    ns:hasStmtType 3 ;
+    ns:hasStmtTypeStr "StatementType.Loop"^^xsd:integer ;
+    ns:hasVarDefs [ ns:hasVarDef <NS/5363250438201970157> ] ;
+    ns:hasVarUses [ ns:hasVarUse <NS/-2292721502658799941> ] ;
+    ns:stmtString "for j in range(len(arr) - 1, -1, -1):" .
+
+ns:stmtAtLine18 ns:hasBlockLineNo 1 ;
+    ns:hasLHSs [ ns:hasLHS <NS/8931069138905403341> ] ;
+    ns:hasLineNo 18 ;
+    ns:hasOperator 26 ;
+    ns:hasOperatorStr "Operator.Assign" ;
+    ns:hasRHS <NS/-1057703587007188301> ;
+    ns:hasStmtType 1 ;
+    ns:hasStmtTypeStr "StatementType.Expression"^^xsd:integer ;
+    ns:hasVarDefs [ ns:hasVarDef <NS/-413792320302729873> ] ;
+    ns:hasVarUses [ ns:hasVarUse <NS/-5897254778472532222>,
+                <NS/5363250438201970157> ] ;
+    ns:stmtString "arr[j] = arr[j - 1]" .
+
+ns:stmtAtLine2 ns:hasBlockLineNo 1 ;
+    ns:hasLHSs [ ns:hasLHS <NS/-6987884689226362546> ] ;
+    ns:hasLineNo 2 ;
+    ns:hasOperator 26 ;
+    ns:hasOperatorStr "Operator.Assign" ;
+    ns:hasRHS <NS/-7966476211444856667> ;
+    ns:hasStmtType 1 ;
+    ns:hasStmtTypeStr "StatementType.Expression"^^xsd:integer ;
+    ns:hasVarDefs [ ns:hasVarDef <NS/-6735439360671838286> ] ;
+    ns:stmtString "arr = [1, 2, 3, 4, 5]" .
+
+ns:stmtAtLine22 ns:hasBlockLineNo 1 ;
+    ns:hasLHSs [ ns:hasLHS <NS/-5827209598920314130> ] ;
+    ns:hasLineNo 22 ;
+    ns:hasOperator 26 ;
+    ns:hasOperatorStr "Operator.Assign" ;
+    ns:hasRHS <NS/7725162195558254452> ;
+    ns:hasStmtType 1 ;
+    ns:hasStmtTypeStr "StatementType.Expression"^^xsd:integer ;
+    ns:hasVarDefs [ ns:hasVarDef <NS/-1996072727810494437> ] ;
+    ns:hasVarUses [ ns:hasVarUse <NS/6059893195497634806> ] ;
+    ns:stmtString "arr[0] = last" .
+
+ns:stmtAtLine24 ns:hasBlockLineNo 1 ;
+    ns:hasLineNo 24 ;
+    ns:hasStmtType 1 ;
+    ns:hasStmtTypeStr "StatementType.Expression"^^xsd:integer ;
+    ns:stmtString "print()" .
+
+ns:stmtAtLine27 ns:hasBlockLineNo 2 ;
+    ns:hasLineNo 27 ;
+    ns:hasStmtType 1 ;
+    ns:hasStmtTypeStr "StatementType.Expression"^^xsd:integer ;
+    ns:stmtString "print('Array after right rotation: ')" .
+
+ns:stmtAtLine28 ns:hasBlockLineNo 1 ;
+    ns:hasLineNo 28 ;
+    ns:hasStmtType 3 ;
+    ns:hasStmtTypeStr "StatementType.Loop"^^xsd:integer ;
+    ns:hasVarDefs [ ns:hasVarDef <NS/4839003584871545710> ] ;
+    ns:hasVarUses [ ns:hasVarUse <NS/-2292721502658799941> ] ;
+    ns:stmtString "for i in range(0, len(arr)):" .
+
+ns:stmtAtLine29 ns:hasBlockLineNo 1 ;
+    ns:hasLineNo 29 ;
+    ns:hasStmtType 1 ;
+    ns:hasStmtTypeStr "StatementType.Expression"^^xsd:integer ;
+    ns:hasVarUses [ ns:hasVarUse <NS/-7600015012796952598>,
+                <NS/4839003584871545710> ] ;
+    ns:stmtString "print(arr[i])" .
+
+ns:stmtAtLine4 ns:hasBlockLineNo 2 ;
+    ns:hasLHSs [ ns:hasLHS <NS/-6806091404601886873> ] ;
+    ns:hasLineNo 4 ;
+    ns:hasOperator 26 ;
+    ns:hasOperatorStr "Operator.Assign" ;
+    ns:hasRHS <NS/6657706377691527971> ;
+    ns:hasStmtType 1 ;
+    ns:hasStmtTypeStr "StatementType.Expression"^^xsd:integer ;
+    ns:hasVarDefs [ ns:hasVarDef <NS/6522732389406290960> ] ;
+    ns:stmtString "n = 3" .
+
+ns:stmtAtLine7 ns:hasBlockLineNo 3 ;
+    ns:hasLineNo 7 ;
+    ns:hasStmtType 1 ;
+    ns:hasStmtTypeStr "StatementType.Expression"^^xsd:integer ;
+    ns:stmtString "print('Original array: ')" .
+
+ns:stmtAtLine8 ns:hasBlockLineNo 1 ;
+    ns:hasLineNo 8 ;
+    ns:hasStmtType 3 ;
+    ns:hasStmtTypeStr "StatementType.Loop"^^xsd:integer ;
+    ns:hasVarDefs [ ns:hasVarDef <NS/4839003584871545710> ] ;
+    ns:hasVarUses [ ns:hasVarUse <NS/-2292721502658799941> ] ;
+    ns:stmtString "for i in range(0, len(arr)):" .
+
+ns:stmtAtLine9 ns:hasBlockLineNo 1 ;
+    ns:hasLineNo 9 ;
+    ns:hasStmtType 1 ;
+    ns:hasStmtTypeStr "StatementType.Expression"^^xsd:integer ;
+    ns:hasVarUses [ ns:hasVarUse <NS/-7600015012796952598>,
+                <NS/4839003584871545710> ] ;
+    ns:stmtString "print(arr[i])" .
+
+<NS/-5897254778472532222> ns:hasArrayDetails <NS/-2701326294222027719> ;
+    ns:hasValue "arr" .
+
+<NS/-6735439360671838286> ns:hasDataType 5 ;
+    ns:hasDataTypeStr "DataType.List" ;
+    ns:hasValue "arr" .
+
+<NS/-7600015012796952598> ns:hasArrayDetails <NS/3824201372902403646> ;
+    ns:hasValue "arr" .
+
+<NS/5363250438201970157> ns:hasValue "j" .
+
+<NS/6522732389406290960> ns:hasDataType 2 ;
+    ns:hasDataTypeStr "DataType.Integer" ;
+    ns:hasMaxValue "9.223372036854776e+18"^^xsd:float ;
+    ns:hasMinValue "-9.223372036854776e+18"^^xsd:float ;
+    ns:hasValue "n" .
+
+<NS/7725162195558254452> ns:hasExpression "last" ;
+    ns:hasStatementSideType 1 ;
+    ns:hasStatementSideTypeStr "StatementSideType.Variable" ;
+    ns:hasVarUses [ ns:hasVarUse <NS/6059893195497634806> ],
+        [ ns:hasVarUse <NS/6059893195497634806> ] .
+
+<NS/1> ns:hasBlkCtgry ns:BLKCTGRY1 ;
+    ns:hasBlkCtgryStr ns:BLKCTGRYSTRBlockCategory.NONE ;
+    ns:hasID "1" ;
+    ns:hasStmtList [ ns:hasStmt ns:stmtAtLine2,
+                ns:stmtAtLine4,
+                ns:stmtAtLine7 ] ;
+    ns:hasSuccessor <NS/2> ;
+    ns:nextBlock <NS/2> .
+
+<NS/-2292721502658799941> ns:hasValue "arr" .
+
+<NS/11> ns:hasBlkCtgry ns:BLKCTGRY1 ;
+    ns:hasBlkCtgryStr ns:BLKCTGRYSTRBlockCategory.NONE ;
+    ns:hasID "11" ;
+    ns:hasPredecessor <NS/10> ;
+    ns:hasStmtList [ ns:hasStmt ns:stmtAtLine29 ] ;
+    ns:hasSuccessor <NS/10> .
+
+<NS/5> ns:hasBlkCtgry ns:BLKCTGRY1 ;
+    ns:hasBlkCtgryStr ns:BLKCTGRYSTRBlockCategory.NONE ;
+    ns:hasID "5" ;
+    ns:hasPredecessor <NS/4> ;
+    ns:hasStmtList [ ns:hasStmt ns:stmtAtLine14 ] ;
+    ns:hasSuccessor <NS/6> ;
+    ns:nextBlock <NS/6> .
+
+<NS/6059893195497634806> ns:hasValue "last" .
+
+<NS/9> ns:hasBlkCtgry ns:BLKCTGRY1 ;
+    ns:hasBlkCtgryStr ns:BLKCTGRYSTRBlockCategory.NONE ;
+    ns:hasID "9" ;
+    ns:hasPredecessor <NS/8> ;
+    ns:hasStmtList [ ns:hasStmt ns:stmtAtLine24,
+                ns:stmtAtLine27 ] ;
+    ns:hasSuccessor <NS/10> ;
+    ns:nextBlock <NS/10> .
+
+<NS/10> ns:hasBlkCtgry ns:BLKCTGRY1 ;
+    ns:hasBlkCtgryStr ns:BLKCTGRYSTRBlockCategory.NONE ;
+    ns:hasID "10" ;
+    ns:hasPredecessor <NS/11>,
+        <NS/9> ;
+    ns:hasStmtList [ ns:hasStmt ns:stmtAtLine28 ] ;
+    ns:hasSuccessor <NS/11> ;
+    ns:nextBlock <NS/11> .
+
+<NS/2> ns:hasBlkCtgry ns:BLKCTGRY1 ;
+    ns:hasBlkCtgryStr ns:BLKCTGRYSTRBlockCategory.NONE ;
+    ns:hasID "2" ;
+    ns:hasPredecessor <NS/1>,
+        <NS/3> ;
+    ns:hasStmtList [ ns:hasStmt ns:stmtAtLine8 ] ;
+    ns:hasSuccessor <NS/3> ;
+    ns:nextBlock <NS/3> .
+
+<NS/3> ns:hasBlkCtgry ns:BLKCTGRY1 ;
+    ns:hasBlkCtgryStr ns:BLKCTGRYSTRBlockCategory.NONE ;
+    ns:hasID "3" ;
+    ns:hasPredecessor <NS/2> ;
+    ns:hasStmtList [ ns:hasStmt ns:stmtAtLine9 ] ;
+    ns:hasSuccessor <NS/2>,
+        <NS/4> ;
+    ns:nextBlock <NS/4> .
+
+<NS/4> ns:hasBlkCtgry ns:BLKCTGRY1 ;
+    ns:hasBlkCtgryStr ns:BLKCTGRYSTRBlockCategory.NONE ;
+    ns:hasID "4" ;
+    ns:hasPredecessor <NS/3>,
+        <NS/8> ;
+    ns:hasStmtList [ ns:hasStmt ns:stmtAtLine12 ] ;
+    ns:hasSuccessor <NS/5> ;
+    ns:nextBlock <NS/5> .
+
+<NS/4839003584871545710> ns:hasValue "i" .
+
+<NS/6> ns:hasBlkCtgry ns:BLKCTGRY1 ;
+    ns:hasBlkCtgryStr ns:BLKCTGRYSTRBlockCategory.NONE ;
+    ns:hasID "6" ;
+    ns:hasPredecessor <NS/5>,
+        <NS/7> ;
+    ns:hasStmtList [ ns:hasStmt ns:stmtAtLine16 ] ;
+    ns:hasSuccessor <NS/7> ;
+    ns:nextBlock <NS/7> .
+
+<NS/7> ns:hasBlkCtgry ns:BLKCTGRY1 ;
+    ns:hasBlkCtgryStr ns:BLKCTGRYSTRBlockCategory.NONE ;
+    ns:hasID "7" ;
+    ns:hasPredecessor <NS/6> ;
+    ns:hasStmtList [ ns:hasStmt ns:stmtAtLine18 ] ;
+    ns:hasSuccessor <NS/6>,
+        <NS/8> ;
+    ns:nextBlock <NS/8> .
+
+<NS/8> ns:hasBlkCtgry ns:BLKCTGRY1 ;
+    ns:hasBlkCtgryStr ns:BLKCTGRYSTRBlockCategory.NONE ;
+    ns:hasID "8" ;
+    ns:hasPredecessor <NS/7> ;
+    ns:hasStmtList [ ns:hasStmt ns:stmtAtLine22 ] ;
+    ns:hasSuccessor <NS/4>,
+        <NS/9> ;
+    ns:nextBlock <NS/9> .
+
