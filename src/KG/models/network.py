@@ -9,7 +9,7 @@ from torch.utils.data import TensorDataset, Dataset, DataLoader
 
 class Network(nn.Module):
     """
-    class for forward and backprop for architechures
+    class for forward and backprop functionalities for architechures
 
     """
 
@@ -50,22 +50,17 @@ class Network(nn.Module):
             # training loop
             running_loss = 0.0
             for batch_ndx, sample in enumerate(TrainLoader):
-                print("-----batch no. ", batch_ndx + 1)
+                print("---batch no. ", batch_ndx + 1)
                 a = data_processor.one_hot_encoding(sample[0], self.model.num_entities)
                 b = data_processor.one_hot_encoding(sample[1], self.model.num_entities)
                 r = data_processor.one_hot_encoding(sample[2], self.model.num_relations)
                 y_target = sample[3]  # target probabilities
                 self.optimizer.zero_grad()
                 y_pred = self.model(a, b, r)
-                loss_1 = self.criterion(y_pred, y_target)
-                #loss_2 = self.regularizer
-                print(loss_1)
-                #loss.backward(retain_graph=True)
-                loss_1.backward()
-                #loss_2.backward(retain_graph=True)
+                loss = self.criterion(y_pred, y_target) + self.regularizer
+                loss.backward(retain_graph=True)
                 self.optimizer.step()
-                #running_loss += (loss_1 + loss_2).item()
-            """
+                running_loss += loss.item()
             else:
                 # validation loop
                 val_loss = 0
@@ -89,7 +84,6 @@ class Network(nn.Module):
                         accuracy = (y_pred, y_target)
                 train_losses.append(running_loss / len(TrainLoader))
                 test_losses.append(val_loss / len(ValLoader))
-            """
 
     # predict the probabilities after training
     def predict(self, x_test):
