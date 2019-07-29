@@ -13,7 +13,7 @@ class HOLE(nn.Module):
     """
 
     # defining architechure for holographic embedding
-    def __init__(self, num_dim, num_entities, num_relations, score=True):
+    def __init__(self, num_dim, num_entities, num_relations):
         super(HOLE, self).__init__()
         self.num_dim = num_dim
         self.num_entities = num_entities
@@ -21,7 +21,6 @@ class HOLE(nn.Module):
         self.entity_embedding = nn.Linear(num_entities, num_dim, bias=False)
         self.relation_embedding = nn.Linear(num_relations, num_dim, bias=False)
         self.sigmoid = nn.Sigmoid()
-        self.score = score
 
     def shift_left(self, a, shift_size):
         a = a.detach().numpy()
@@ -45,8 +44,4 @@ class HOLE(nn.Module):
         )
         result_2 = torch.mm(self.relation_embedding(r), torch.transpose(result_1, 0, 1))
         result = torch.diag(result_2).view(-1, 1)
-        # return self.sigmoid(result)
-        if(self.score):
-            return self.sigmoid(result)
-        else:
-            return torch.gt(self.sigmoid(result), 0.5)
+        return self.sigmoid(result)

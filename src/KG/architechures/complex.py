@@ -11,7 +11,7 @@ class ComplEx(nn.Module):
 
     """
 
-    def __init__(self, num_dim, num_entities, num_relations, score=True):
+    def __init__(self, num_dim, num_entities, num_relations):
         super(ComplEx, self).__init__()
         self.num_dim = num_dim
         self.num_entities = num_entities
@@ -29,7 +29,6 @@ class ComplEx(nn.Module):
             num_relations, num_dim, bias=False
         )  # relation embedding imaginary part
         self.sigmoid = nn.Sigmoid()
-        self.score = score
 
     def forward(self, x, y, r):
         term_1 = torch.mean(
@@ -59,8 +58,4 @@ class ComplEx(nn.Module):
         result = (
             term_1 + term_2 + term_3 - term_4
         )  # resultant tensor product of triplet embeddings (x, y, r)
-        # return self.sigmoid(result)
-        if(self.score):
-            return self.sigmoid(result)
-        else:
-            return torch.gt(self.sigmoid(result), 0.5)
+        return self.sigmoid(result)

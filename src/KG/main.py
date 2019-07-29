@@ -216,9 +216,12 @@ y = x.long()
 print(y.type())
 print(x, y)
 
-def step_function(self, a):
-    # TODO
 
 
 x = torch.randn(5, 1)
+print(x)
+y = torch.gt(x, 1)
+print(y.size())
 
+x = np.array([[1], [2]]).reshape(-1)
+print(x.shape)
