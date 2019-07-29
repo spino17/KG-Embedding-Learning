@@ -1,5 +1,6 @@
 from torch import nn
 import torch
+from KG.utils import Functions as F
 
 
 class Compositional(nn.Module):
@@ -11,7 +12,7 @@ class Compositional(nn.Module):
 
     # defining architechure given in paper Nickel et al (2015) -
     # compositional embeddings of knowledge graph
-    def __init__(self, num_dim, num_entities, num_relations):
+    def __init__(self, num_dim, num_entities, num_relations, score=True):
         super(Compositional, self).__init__()
         # index in module list is equal to the index of the object
         self.num_dim = num_dim
@@ -20,6 +21,7 @@ class Compositional(nn.Module):
         self.embedding_entity = nn.Linear(num_entities, num_dim, bias=False)
         self.embedding_relation = nn.Linear(num_relations, num_dim, bias=False)
         self.sigmoid = nn.Sigmoid()
+        self.score = score
 
     # returns the probability for a relation to hold true
     def forward(self, x, y, r):
@@ -28,4 +30,8 @@ class Compositional(nn.Module):
         result_1 = (embedding_a, embedding_b)
         result_2 = torch.mm(self.embedding_relation(r), torch.transpose(result_1, 0, 1))
         result = torch.diag(result_2).view(-1, 1)
-        return self.sigmoid(result)
+        # return self.sigmoid(result)
+        if(self.score):
+            return self.sigmoid(result)
+        else:
+            return F.step_function(result)

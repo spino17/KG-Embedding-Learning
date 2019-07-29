@@ -6,6 +6,8 @@ from KG.utils import Regularizer as R
 from KG.preprocessing import DataGenerator
 from torch.utils.data import TensorDataset, Dataset, DataLoader
 from torch.nn.functional import one_hot
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
 
 
 class Network(nn.Module):
@@ -38,7 +40,7 @@ class Network(nn.Module):
 
     # training method
     def fit(self, x_train, y_train, batch_size, num_epochs, validation_split=0.2):
-        train_losses, test_losses = [], []
+        train_losses, val_losses, epochs = [], [], []
         X = x_train[:, 0]  # entity - 1
         Y = x_train[:, 1]  # entity - 2
         Z = x_train[:, 2]  # entity - 3
@@ -49,7 +51,7 @@ class Network(nn.Module):
         for epoch in range(num_epochs):
             print("epoch no. ", epoch + 1)
             # training loop
-            running_loss = 0.0
+            train_loss = 0
             for batch_ndx, sample in enumerate(TrainLoader):
                 print("---batch no. ", batch_ndx + 1)
                 a = data_processor.one_hot_encoding(sample[0], self.model.num_entities)
@@ -61,12 +63,13 @@ class Network(nn.Module):
                 loss = self.criterion(y_pred, y_target) + self.regularizer
                 loss.backward(retain_graph=True)
                 self.optimizer.step()
-                running_loss += loss.item()
+                train_loss += loss.item()
             else:
                 # validation loop
                 val_loss = 0
                 accuracy = 0
                 with torch.no_grad():
+                    # scope of no gradient calculations
                     for batch_ndx, sample in enumerate(ValLoader):
                         a = data_processor.one_hot_encoding(
                             sample[0], self.model.num_entities
@@ -82,9 +85,18 @@ class Network(nn.Module):
                         val_loss += (
                             self.criterion(y_pred, y_target) + self.regularizer
                         ).item()
-                        accuracy = (y_pred, y_target)
-                train_losses.append(running_loss / len(TrainLoader))
-                test_losses.append(val_loss / len(ValLoader))
+                        y_true = y_target.long().numpy()
+                        y_hat = y_pred.long().numpy()
+                        accuracy = accuracy_score(y_true, y_hat)
+                        print("accuracy: ", accuracy * 100)
+                train_losses.append(train_loss / len(TrainLoader))
+                val_losses.append(val_loss / len(ValLoader))
+                epochs.append(epoch + 1)
+
+        # plot the loss vs epoch graphs
+        plt.scatter(epochs, train_losses)
+        plt.scatter(epochs, val_losses)
+        plt.show()
 
     # predict the probabilities after training
     def predict(self, x_test):
@@ -95,6 +107,7 @@ class Network(nn.Module):
         test_dataset = TensorDataset(X, Y, Z)
         TestLoader = DataLoader(test_dataset, batch_size)
         with torch.no_grad():
+            # scope of no gradient calculations
             for batch_ndx, sample in enumerate(TestLoader):
                 a = one_hot(sample[0], self.model.num_entities).float()
                 b = one_hot(sample[1], self.model.num_entities).float()

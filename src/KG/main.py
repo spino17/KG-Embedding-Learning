@@ -207,3 +207,18 @@ def single_tensor_product(a, b, dim=1):
 q = np.array([[1, 2], [2, 4]])
 x = q[
 print(q.size)
+
+x = torch.randn(2, 10)
+y = x.long()
+print(x, y)
+print(np.type(y))
+y = x.long()
+print(y.type())
+print(x, y)
+
+def step_function(self, a):
+    # TODO
+
+
+x = torch.randn(5, 1)
+
