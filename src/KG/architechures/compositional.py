@@ -17,21 +17,15 @@ class Compositional(nn.Module):
         self.num_dim = num_dim
         self.num_entities = num_entities
         self.num_relations = num_relations
-        self.embedding_list_entity = nn.ModuleList(
-            [nn.Linear(1, num_dim) for i in range(num_entities)]
-        )
-        self.embedding_list_relations = nn.ModuleList(
-            [nn.Linear(num_dim, num_dim) for i in range(num_relations)]
-        )
+        self.embedding_entity = nn.Linear(num_entities, num_dim, bias=False)
+        self.embedding_relation = nn.Linear(num_relations, num_dim, bias=False)
         self.sigmoid = nn.Sigmoid()
-        self.input_vec_1 = torch.ones(1, 1)  # to convert linear to tensors
-        self.input_vec_2 = torch.eye(num_dim)  # identity matrix
 
     # returns the probability for a relation to hold true
     def forward(self, x, y, r):
-        result_1 = torch.mm(
-            self.embedding_list_entity[y](self.input_vec_1),
-            self.embedding_list_relations[r](self.input_vec_2),
-        )
-        result_2 = torch.dot(result_1, self.embedding_list_entity[x](self.input_vec_1))
-        return self.sigmoid(result_2)
+        embedding_a = self.embedding_entity(x)
+        embedding_b = self.embedding_entity(y)
+        result_1 = (embedding_a, embedding_b)
+        result_2 = torch.mm(self.embedding_relation(r), torch.transpose(result_1, 0, 1))
+        result = torch.diag(result_2).view(-1, 1)
+        return self.sigmoid(result)

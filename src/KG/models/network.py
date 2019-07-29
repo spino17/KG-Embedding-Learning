@@ -5,6 +5,7 @@ from KG.utils import Optimizers as O
 from KG.utils import Regularizer as R
 from KG.preprocessing import DataGenerator
 from torch.utils.data import TensorDataset, Dataset, DataLoader
+from torch.nn.functional import one_hot
 
 
 class Network(nn.Module):
@@ -87,8 +88,16 @@ class Network(nn.Module):
 
     # predict the probabilities after training
     def predict(self, x_test):
-        X = x_test[:, 0]  # entity - 1
-        Y = x_test[:, 1]  # entity - 2
-        Z = x_test[:, 2]  # entity - 3
+        batch_size = int(x_test.size / 3)  # number of rows in test dataset
+        X = torch.from_numpy(x_test[:, 0])  # entity - 1
+        Y = torch.from_numpy(x_test[:, 1])  # entity - 2
+        Z = torch.from_numpy(x_test[:, 2])  # entity - 3
         test_dataset = TensorDataset(X, Y, Z)
-        return self.model.forward(a, b, r)
+        TestLoader = DataLoader(test_dataset, batch_size)
+        with torch.no_grad():
+            for batch_ndx, sample in enumerate(TestLoader):
+                a = one_hot(sample[0], self.model.num_entities).float()
+                b = one_hot(sample[1], self.model.num_entities).float()
+                r = one_hot(sample[2], self.model.num_relations).float()
+                break
+            return self.model.forward(a, b, r)
