@@ -85,8 +85,13 @@ class Network(nn.Module):
                         val_loss += (
                             self.criterion(y_pred, y_target) + self.regularizer
                         ).item()
+                        #y_true = y_target.long().numpy()
+                        #y_hat = y_pred.long().numpy()
+                        if(self.model.score):
+                            y_hat = torch.gt(y_pred, 0.5).long().numpy()
+                        else:
+                            y_hat = y_pred.long().numpy()
                         y_true = y_target.long().numpy()
-                        y_hat = y_pred.long().numpy()
                         accuracy = accuracy_score(y_true, y_hat)
                         print("accuracy: ", accuracy * 100)
                 train_losses.append(train_loss / len(TrainLoader))

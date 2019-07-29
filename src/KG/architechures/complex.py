@@ -1,6 +1,5 @@
 from torch import nn
 import torch
-from KG.utils import Functions as F
 
 
 class ComplEx(nn.Module):
@@ -64,4 +63,4 @@ class ComplEx(nn.Module):
         if(self.score):
             return self.sigmoid(result)
         else:
-            return F.step_function(result)
+            return torch.gt(self.sigmoid(result), 0.5)

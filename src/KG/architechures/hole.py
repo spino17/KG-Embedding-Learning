@@ -1,7 +1,6 @@
 from torch import nn
 import torch
 import numpy as np
-from KG.utils import Functions as F
 
 
 class HOLE(nn.Module):
@@ -50,4 +49,4 @@ class HOLE(nn.Module):
         if(self.score):
             return self.sigmoid(result)
         else:
-            return F.step_function(self.sigmoid(result))
+            return torch.gt(self.sigmoid(result), 0.5)
