@@ -28,7 +28,7 @@ print(output)
 output_ = model_.model(g, h, j)
 print(output_)
 # compiling the model
-model.compile(optimizer_name="adam", loss="LogisticLoss")
+model.compile(optimizer_name="adam", loss="LogisticLoss", regularizer="L2")
 
 x_train = np.array([[1, 2, 3], [3, 4, 5], [5, 6, 6], [1, 2, 1]])
 print(x_train.shape)
