@@ -1,4 +1,4 @@
-from KG.architechures import Compositional, HOLE, ComplEx
+from KG.architechures import Compositional, HOLE, ComplEx, QuatE
 from KG.models import Network
 import torch
 from torch import nn
@@ -16,7 +16,7 @@ num_epochs = 3  # number of loops over training dataset
 # TODO
 
 # defining the model
-model = Network(HOLE(num_dim, num_entities, num_relations))
+model = Network(QuatE(num_dim, num_entities, num_relations))
 model_ = Network(ComplEx(num_dim, num_entities, num_relations))
 print(model.model)
 g = torch.randn(2, 20)
@@ -225,3 +225,22 @@ print(y.size())
 
 x = np.array([[1], [2]]).reshape(-1)
 print(x.shape)
+
+x = torch.randn(2, 3)
+y = torch.rand(2, 3)
+print(x, y)
+
+print(x*y)
+
+x = torch.randn(2, 3)
+matrix = nn.Linear(3, 4)
+y = matrix(x)
+print(y)
+z = torch.norm(y, dim=1).view(-1, 1)
+print(z**2)
+print(torch.sqrt(x))
+print(x)
+x = torch.tensor([[1], [2]]).float()
+y = torch.randn(2, 3)
+print(y)
+print(x * y)

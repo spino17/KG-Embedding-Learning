@@ -8,7 +8,8 @@ class HOLE(nn.Module):
     Architechure for holographic embeddings - uses circular correlations
     for composition of entities and combining expressive power
     of the tensor product with the efficiency and simplicity of
-    TRANSE
+    TRANSE.
+    paper - Nickel et al.2015
 
     """
 

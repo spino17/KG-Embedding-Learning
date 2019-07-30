@@ -7,7 +7,8 @@ class ComplEx(nn.Module):
     Architechure for modelling anti-symmetric relations (which in real space
     settings can overflow parameters and poses difficulties in generalizations)
     using complex embedding vectors for entities and relations and using hermi-
-    tian dot product which stores information of anti-symmetric relations
+    tian dot product which stores information of anti-symmetric relations.
+    paper - Trouillon et al.2016
 
     """
 
