@@ -16,6 +16,7 @@ num_epochs = 3  # number of loops over training dataset
 # TODO
 
 # defining the model
+
 model = Network(QuatE(num_dim, num_entities, num_relations))
 model_ = Network(ComplEx(num_dim, num_entities, num_relations))
 print(model.model)

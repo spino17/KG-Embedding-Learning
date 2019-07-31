@@ -52,6 +52,7 @@ class Network(nn.Module):
             print("epoch no. ", epoch + 1)
             # training loop
             train_loss = 0
+            self.model.train()
             for batch_ndx, sample in enumerate(TrainLoader):
                 print("---batch no. ", batch_ndx + 1)
                 a = data_processor.one_hot_encoding(sample[0], self.model.num_entities)
@@ -66,6 +67,7 @@ class Network(nn.Module):
                 train_loss += loss.item()
             else:
                 # validation loop
+                self.model.eval()
                 val_loss = 0
                 accuracy = 0
                 with torch.no_grad():
@@ -108,6 +110,7 @@ class Network(nn.Module):
         TestLoader = DataLoader(test_dataset, batch_size)
         with torch.no_grad():
             # scope of no gradient calculations
+            self.model.eval()
             for batch_ndx, sample in enumerate(TestLoader):
                 a = one_hot(sample[0], self.model.num_entities).float()
                 b = one_hot(sample[1], self.model.num_entities).float()
