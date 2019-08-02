@@ -45,7 +45,10 @@ class Network(nn.Module):
         Y = x_train[:, 1]  # entity - 2
         Z = x_train[:, 2]  # entity - 3
         y_target = y_train  # target probabilities
-        data_processor = DataGenerator(X, Y, Z, y_target, batch_size, validation_split)
+        data_processor = DataGenerator()
+        data_processor.set_dataset(
+            X, Y, Z, y_target, batch_size, validation_split
+        )  # tensorise the dataset elements for further processing in pytorch nn module
         TrainLoader = data_processor.get_trainloader()
         ValLoader = data_processor.get_validationloader()
         for epoch in range(num_epochs):
@@ -89,15 +92,17 @@ class Network(nn.Module):
                         ).item()
                         y_hat = torch.gt(y_pred, 0.5).long().numpy().reshape(-1)
                         y_true = y_target.long().numpy().reshape(-1)
-                        accuracy = accuracy_score(y_true, y_hat)
-                        print("accuracy: ", accuracy * 100)
+                        # accuracy = accuracy_score(y_true, y_hat)
+                        # print("accuracy on validation set: ", accuracy * 100)
+                        accuracy += accuracy_score(y_true, y_hat)
+                print("accuracy on validation set: ", accuracy / len(ValLoader))
                 train_losses.append(train_loss / len(TrainLoader))
                 val_losses.append(val_loss / len(ValLoader))
                 epochs.append(epoch + 1)
 
         # plot the loss vs epoch graphs
-        plt.scatter(epochs, train_losses)
-        plt.scatter(epochs, val_losses)
+        plt.scatter(epochs, train_losses, color='red')
+        plt.scatter(epochs, val_losses, color='blue')
         plt.show()
 
     # predict the probabilities after training

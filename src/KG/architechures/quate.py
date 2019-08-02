@@ -83,12 +83,6 @@ class QuatE(nn.Module):
         R_j = norm * R_j
         R_k = norm * R_k
 
-        """
-        Q_r = H_r * R_r - H_i * R_i - H_j * R_j - H_k * R_k
-        Q_i = H_r * R_i + H_i * R_r + H_j * R_k - H_k * R_j
-        Q_j = H_r * R_j - H_i * R_k + H_j * R_r + H_k * R_i
-        Q_k = H_r * R_k + H_i * R_j - H_j * R_i + H_k * R_r
-        """
         Q_r, Q_i, Q_j, Q_k = self.hamilton_product(
             H_r, H_i, H_j, H_k, R_r, R_i, R_j, R_k
         )

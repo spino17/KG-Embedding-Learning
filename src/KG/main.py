@@ -3,21 +3,25 @@ from KG.models import Network
 import torch
 from torch import nn
 import numpy as np
+from KG.preprocessing import DataGenerator
+
+# data preprocessing
+obj = DataGenerator()
+x_train, num_entities, num_relations = obj.load_dataset("/home/bhavya/Desktop/projects/KG-Embedding-Learning---PyTorch/dataset/siemens data/01.nt")
+print(x_train[3])
+y_train = np.zeros((629, 1))
+print(y_train.shape)
+print(num_entities)
+print(num_relations)
 
 # declaring hyperparameters
 num_dim = 5  # dimension of embedding vector
-num_entities = 20  # number of words in vocabulary
-num_relations = 10  # number of relations
 alpha = 1  # coefficient of regularization term
-batch_size = 2  # backprop for this many combined datapoints
-num_epochs = 3  # number of loops over training dataset
-
-# data preprocessing
-# TODO
+batch_size = 20  # backprop for this many combined datapoints
+num_epochs = 10  # number of loops over training dataset
 
 # defining the model
-
-model = Network(QuatE(num_dim, num_entities, num_relations))
+model = Network(HOLE(num_dim, num_entities, num_relations))
 model_ = Network(ComplEx(num_dim, num_entities, num_relations))
 print(model.model)
 g = torch.randn(2, 20)
@@ -40,7 +44,7 @@ b = torch.from_numpy(x_train)
 print(b.type())
 # training call
 print(model.predict(x_train))
-model.fit(x_train, y_train, batch_size, num_epochs, validation_split=0)
+model.fit(x_train, y_train, batch_size, num_epochs, validation_split=0.2)
 print(model.model)
 print(model.optimizer)
 
@@ -133,8 +137,10 @@ y = torch.randn(10, 20)
 z = torch.randn(10, 5)
 w = torch.randn(10, 1)
 dataset = TensorDataset(x, y, z, w)
+print(len(dataset))
 print(type(dataset))
-loader = DataLoader(dataset, -1)
+loader = DataLoader(dataset, 2)
+print(len(loader))
 for batch_ndx, sample in enumerate(loader):
     print(batch_ndx)
     print(sample[2].shape)

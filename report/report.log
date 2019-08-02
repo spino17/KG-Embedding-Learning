@@ -1,6 +1,6 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.17)  29 JUL 2019 23:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.17)  31 JUL 2019 17:14
 entering extended mode
- \write18 enabled.
+ restricted \write18 enabled.
  %&-line parsing enabled.
 **report.tex
 (./report.tex
@@ -1575,28 +1575,26 @@ Overfull \hbox (0.37437pt too wide) in paragraph at lines 124--124
 lling
  []
 
+[5] (./report.bbl
 
-Overfull \hbox (1.18074pt too wide) in paragraph at lines 131--131
-[]\OT1/cmr/bx/n/17.28 Learnable Non-Euclidean Em-bed-dings - For sym-met-
- []
+Package natbib Warning: Empty `thebibliography' environment on input line 3.
 
-[5]
-No file report.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 162.
-[6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 162.
+)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 168.
+ [6]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 168.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 162.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 162.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 168.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 168.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 0DF4EADB53448B4E7B2F4586A77963BB;673.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 162.
+(rerunfilecheck)             Checksum: D3960BAD887AF15075D1E95A50C3C283;886.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 168.
  ) 
 Here is how much of TeX's memory you used:
- 17493 strings out of 493029
- 298822 string characters out of 6136233
+ 17505 strings out of 493029
+ 298970 string characters out of 6136233
  370544 words of memory out of 5000000
- 20808 multiletter control sequences out of 15000+600000
+ 20811 multiletter control sequences out of 15000+600000
  15601 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  40i,8n,42p,10402b,347s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1618,10 +1616,10 @@ texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on report.pdf (6 pages, 209387 bytes).
+Output written on report.pdf (6 pages, 212856 bytes).
 PDF statistics:
- 185 PDF objects out of 1000 (max. 8388607)
- 156 compressed objects within 2 object streams
- 32 named destinations out of 1000 (max. 500000)
- 65 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 210 PDF objects out of 1000 (max. 8388607)
+ 181 compressed objects within 2 object streams
+ 39 named destinations out of 1000 (max. 500000)
+ 89 words of extra memory for PDF output out of 10000 (max. 10000000)
 
