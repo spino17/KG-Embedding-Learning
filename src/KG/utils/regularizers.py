@@ -8,7 +8,7 @@ class Regularizer:
 
     """
 
-    def regularizer_function(name, parameters, alpha=0.5):
+    def regularizer_function(name, parameters, alpha=0):
         if name == "L2":
             L2_term = 0
             for params in parameters:

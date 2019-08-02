@@ -4,6 +4,8 @@ from torch.nn.functional import one_hot
 import numpy as np
 from rdflib.graph import Graph
 import json
+from sklearn.utils import shuffle
+import random
 
 
 class DataGenerator(Dataset):
@@ -44,6 +46,10 @@ class DataGenerator(Dataset):
         g.parse(
             file_path, format="nt"
         )  # file to parse data from (should be in nt format)
+
+        # initializing adjacency matrix - 3D matrix which has first, second dimension
+        # for entity indices and thrid dimension for relation indices and is equal
+        # to one when the triplet fact is true else false
 
         # loop in g for each triplet
         index_e, index_r = 0, 0  # each entity and relation is mapped to a integer
@@ -87,4 +93,35 @@ class DataGenerator(Dataset):
 
         self.entity_to_integer_mapping = triplet_dict_entity
         self.relation_to_integer_mapping = triplet_dict_relation
-        return np.array(dataset), len(triplet_dict_entity), len(triplet_dict_relation)
+        num_entities = len(triplet_dict_entity)
+        num_relations = len(triplet_dict_relation)
+        labels = np.ones((len(dataset), 1))  # labels
+
+        # initializing adjacency matrix - 3D matrix which has first, second dimension
+        # for entity indices and thrid dimension for relation indices and is equal
+        # to one when the triplet fact is true else false
+        self.adj_matrix = np.zeros((num_entities, num_entities, num_relations))
+        for row in dataset:
+            idx_0 = int(row[0])  # entity s mapped integer
+            idx_1 = int(row[1])  # entity o mapped integer
+            idx_2 = int(row[2])  # relation mapped integer
+            self.adj_matrix[idx_0][idx_1][idx_2] = 1  # make the triplet entry 1
+
+        # randomly synthesing false facts
+        critical_size = len(
+            dataset
+        )  # false facts should be upto this critical size which is size of true fact triplet dataset
+        count = 0
+        while count < critical_size:
+            idx_0 = random.randrange(0, num_entities - 1)
+            idx_1 = random.randrange(0, num_entities - 1)
+            idx_2 = random.randrange(0, num_relations - 1)
+            if self.adj_matrix[idx_0][idx_1][idx_2] == 0:
+                count += 1
+                dataset.append([idx_0, idx_1, idx_2])
+
+        X = np.array(dataset)  # triplets of true and false facts
+        y = np.concatenate((labels, np.zeros((count, 1))), axis=0)
+        X, y = shuffle(X, y)  # randomly shuffle the dataset
+
+        return X, y, num_entities, num_relations

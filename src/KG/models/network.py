@@ -28,7 +28,7 @@ class Network(nn.Module):
         regularizer="L2",
         lr=0.003,
         momentum=0.95,
-        alpha=0.5,
+        alpha=0,
     ):
         self.criterion = L.loss_function(loss)
         self.optimizer = O.optimizer(
@@ -57,13 +57,14 @@ class Network(nn.Module):
             train_loss = 0
             self.model.train()
             for batch_ndx, sample in enumerate(TrainLoader):
-                print("---batch no. ", batch_ndx + 1)
+                # print("---batch no. ", batch_ndx + 1)
                 a = data_processor.one_hot_encoding(sample[0], self.model.num_entities)
                 b = data_processor.one_hot_encoding(sample[1], self.model.num_entities)
                 r = data_processor.one_hot_encoding(sample[2], self.model.num_relations)
                 y_target = sample[3]  # target probabilities
                 self.optimizer.zero_grad()
                 y_pred = self.model(a, b, r)
+                # print(y_pred)
                 loss = self.criterion(y_pred, y_target) + self.regularizer
                 loss.backward(retain_graph=True)
                 self.optimizer.step()
@@ -101,8 +102,8 @@ class Network(nn.Module):
                 epochs.append(epoch + 1)
 
         # plot the loss vs epoch graphs
-        plt.scatter(epochs, train_losses, color='red')
-        plt.scatter(epochs, val_losses, color='blue')
+        plt.plot(epochs, train_losses, color="red")
+        plt.plot(epochs, val_losses, color="blue")
         plt.show()
 
     # predict the probabilities after training
